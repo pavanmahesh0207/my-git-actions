@@ -1,0 +1,31 @@
+name: Super Linter
+on:
+  push:
+    branches-ignore:
+      - "master"
+      - "main"
+  pull_request:
+    branches-ignore:
+      - "master"
+      - "main"
+
+jobs:
+  super_linter:
+    name: Lint code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Super Linter
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: "your-default-branch"
+
+      - name: Super Linter Report
+        run: |
+          echo "Super Linter found the following issues:"
+          echo ""
+          cat ${{ env.GITHUB_WORKSPACE }}/.super-linter.log
